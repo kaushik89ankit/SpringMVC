@@ -1,5 +1,8 @@
 package com.appsdeveloperblog.app.ws.ui.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.appsdeveloperblog.app.ws.service.UserService;
+import com.appsdeveloperblog.app.ws.service.Impl.UserServiceImpl;
 import com.appsdeveloperblog.app.ws.shared.dto.UserDto;
 import com.appsdeveloperblog.app.ws.ui.model.request.UserDetailsRequestModel;
 import com.appsdeveloperblog.app.ws.ui.model.response.UserRest;
@@ -22,9 +26,20 @@ public class UserController {
 	@Autowired
 	UserService userService;
 
-	@GetMapping
-	public String getUser() {
-		return "Get user was called";
+	@GetMapping(produces= {"application/json","application/xml"})
+	public List<UserRest> getUser() {
+		
+		List<UserRest> AllUserRest = new ArrayList<>();
+		List<UserDto> AlluserDto = userService.getAllUser();
+		
+		for(UserDto userDto : AlluserDto) {
+			UserRest userRest = new UserRest();
+			BeanUtils.copyProperties(userDto, userRest);
+			AllUserRest.add(userRest);
+		}
+		
+		return AllUserRest;
+		
 	}
 
 	@PostMapping

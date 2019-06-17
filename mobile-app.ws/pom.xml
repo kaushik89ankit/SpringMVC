@@ -13,7 +13,8 @@
 	<artifactId>mobile-app.ws</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>mobile-app.ws</name>
-	<description>Demo project for Spring Boot</description>
+	<packaging>war</packaging>
+	<description>Project for enrolling students</description>
 	<properties>
 		<java.version>1.8</java.version>
 	</properties>
@@ -41,6 +42,24 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.dataformat</groupId>
+			<artifactId>jackson-dataformat-xml</artifactId>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt -->
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt</artifactId>
+			<version>0.6.0</version>
+		</dependency>
+
 
 	</dependencies>
 
@@ -58,6 +77,14 @@
 					<target>1.8</target>
 				</configuration>
 			</plugin>
+			<!-- # Use when embedded tomcat is used for deployment <plugin> <groupId>org.apache.tomcat.maven</groupId> 
+				<artifactId>tomcat7-maven-plugin</artifactId> <version>2.2</version> </plugin> -->
+
+
+			<!-- <plugin> This is used when deployment will be made via standalone 
+				tomcat server instance <groupId>org.apache.tomcat.maven</groupId> <artifactId>tomcat7-maven-plugin</artifactId> 
+				<version>2.2</version> <configuration> <url>http://127.0.0.1:8080/manager/text</url> 
+				<server>TomcatServer</server> <path>/myapp</path> </configuration> </plugin> -->
 		</plugins>
 	</build>
 

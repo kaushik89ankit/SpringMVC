@@ -1,6 +1,6 @@
 package com.appsdeveloperblog.app.ws;
 
-
+import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -10,9 +10,13 @@ import com.appsdeveloperblog.app.ws.io.entity.UserEntity;
 
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
-	
+
 	UserEntity findByEmail(String email);
 	
+	UserEntity findByUserId(String userID);
+
 	@Query(value = "SELECT * FROM USERS WHERE (lastName = ?1 OR firstName = ?2 ) ", nativeQuery = true)
-	UserEntity findUserByCustomQuery(String lastName , String firstName );
+	List<UserEntity> findUserByCustomQuery(String lastName, String firstName);
+	
+	
 }

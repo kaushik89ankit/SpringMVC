@@ -13,7 +13,7 @@
 	<artifactId>mobile-app.ws</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>mobile-app.ws</name>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<description>Project for enrolling students</description>
 	<properties>
 		<java.version>1.8</java.version>

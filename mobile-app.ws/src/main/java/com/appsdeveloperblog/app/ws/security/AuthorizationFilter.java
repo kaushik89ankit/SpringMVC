@@ -31,6 +31,7 @@ public class AuthorizationFilter extends BasicAuthenticationFilter {
 		if (header == null || !header.startsWith(SecurityConstants.TOKEN_PREFIX)) {
 
 			chain.doFilter(request, response);
+			// response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
 			return;
 		}
 
@@ -46,8 +47,8 @@ public class AuthorizationFilter extends BasicAuthenticationFilter {
 
 		if (token != null) {
 			token = token.replaceFirst(SecurityConstants.TOKEN_PREFIX, "");
-			String user = Jwts.parser().setSigningKey(SecurityConstants.TOKEN_SECRET).parseClaimsJws(token).getBody()
-					.getSubject();
+			String user = Jwts.parser().setSigningKey(SecurityConstants.getTokenSecret()).parseClaimsJws(token)
+					.getBody().getSubject();
 
 			if (user != null) {
 				return new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());

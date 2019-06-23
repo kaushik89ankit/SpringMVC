@@ -31,7 +31,6 @@ public class AuthorizationFilter extends BasicAuthenticationFilter {
 		if (header == null || !header.startsWith(SecurityConstants.TOKEN_PREFIX)) {
 
 			chain.doFilter(request, response);
-			// response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
 			return;
 		}
 

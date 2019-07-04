@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.appsdeveloperblog.app.ws.service.UserService;
-import com.appsdeveloperblog.app.ws.service.Impl.UserServiceImpl;
 import com.appsdeveloperblog.app.ws.shared.dto.UserDto;
 import com.appsdeveloperblog.app.ws.ui.model.request.UserDetailsRequestModel;
+import com.appsdeveloperblog.app.ws.ui.model.response.ErrorMessages;
 import com.appsdeveloperblog.app.ws.ui.model.response.UserRest;
 
 @RestController
@@ -26,24 +26,28 @@ public class UserController {
 	@Autowired
 	UserService userService;
 
-	@GetMapping(produces= {"application/json","application/xml"})
+	@GetMapping(produces = { "application/json", "application/xml" })
 	public List<UserRest> getUser() {
-		
+
 		List<UserRest> AllUserRest = new ArrayList<>();
 		List<UserDto> AlluserDto = userService.getAllUser();
-		
-		for(UserDto userDto : AlluserDto) {
+
+		for (UserDto userDto : AlluserDto) {
 			UserRest userRest = new UserRest();
 			BeanUtils.copyProperties(userDto, userRest);
 			AllUserRest.add(userRest);
 		}
-		
+
 		return AllUserRest;
-		
+
 	}
 
 	@PostMapping
-	public UserRest createUser(@RequestBody UserDetailsRequestModel userDetails) {
+	public UserRest createUser(@RequestBody UserDetailsRequestModel userDetails) throws Exception {
+
+		if (userDetails.getFirstName().isEmpty())
+			throw new Exception(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
+
 		UserRest returnValue = new UserRest();
 		UserDto userDto = new UserDto();
 		BeanUtils.copyProperties(userDetails, userDto);

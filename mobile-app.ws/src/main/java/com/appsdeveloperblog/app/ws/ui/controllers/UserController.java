@@ -3,6 +3,8 @@ package com.appsdeveloperblog.app.ws.ui.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.appsdeveloperblog.app.ws.Exceptions.UserServiceException;
 import com.appsdeveloperblog.app.ws.service.UserService;
 import com.appsdeveloperblog.app.ws.shared.dto.UserDto;
 import com.appsdeveloperblog.app.ws.ui.model.request.UserDetailsRequestModel;
@@ -43,10 +46,10 @@ public class UserController {
 	}
 
 	@PostMapping
-	public UserRest createUser(@RequestBody UserDetailsRequestModel userDetails) throws Exception {
+	public UserRest createUser(@Valid @RequestBody UserDetailsRequestModel userDetails) throws Exception {
 
 		if (userDetails.getFirstName().isEmpty())
-			throw new Exception(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
+			throw new UserServiceException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
 
 		UserRest returnValue = new UserRest();
 		UserDto userDto = new UserDto();

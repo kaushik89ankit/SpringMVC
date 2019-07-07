@@ -51,6 +51,8 @@ public class UserController {
 		if (userDetails.getFirstName().isEmpty())
 			throw new UserServiceException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
 
+		if (userDetails.getPassword().length() < 10)
+			throw new UserServiceException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
 		UserRest returnValue = new UserRest();
 		UserDto userDto = new UserDto();
 		BeanUtils.copyProperties(userDetails, userDto);
